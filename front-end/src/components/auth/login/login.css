@@ -1,0 +1,22 @@
+input{
+    width:20%;
+    padding:10px;
+    border-radius: 25px;
+    border:none;
+    box-shadow: 1px 1px 3px black;
+    text-transform: capitalize;
+}
+input[type=email]
+{
+    text-transform: none;
+}
+
+
+button
+{
+    box-shadow: 1px 1px 3px black;
+    border:none;
+    border-radius:15px;
+    padding:8px
+
+}
