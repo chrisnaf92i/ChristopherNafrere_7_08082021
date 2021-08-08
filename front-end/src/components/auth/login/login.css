@@ -1,12 +1,16 @@
+label
+{
+}
 input{
-    width:20%;
+    width:100%;
     padding:10px;
     border-radius: 25px;
     border:none;
     box-shadow: 1px 1px 3px black;
     text-transform: capitalize;
+    margin:15px 0;
 }
-input[type=email]
+input[type=email], input[type=date], input[type=password]
 {
     text-transform: none;
 }
@@ -14,9 +18,12 @@ input[type=email]
 
 button
 {
+
+    margin-top:25px;
     box-shadow: 1px 1px 3px black;
     border:none;
     border-radius:15px;
-    padding:8px
+    padding:8px;
+    width:20%;
 
 }

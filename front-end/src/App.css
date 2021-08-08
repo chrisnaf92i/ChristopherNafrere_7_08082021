@@ -7,6 +7,7 @@
 {
   
   margin:auto;
+  margin-bottom:25px;
   padding:15px;
 
   border-left:1px solid black;
@@ -32,9 +33,6 @@
 .Nav-right h2
 {
   margin: 0 15px;
+  cursor:pointer;
 }
 
-nav h2:hover
-{
-  border-bottom:3px solid black;
-}
