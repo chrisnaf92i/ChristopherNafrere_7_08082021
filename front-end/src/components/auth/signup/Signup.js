@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component} from 'react'
 import "./signup.css"
 
 export default class Signup extends Component {

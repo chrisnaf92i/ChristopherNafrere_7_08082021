@@ -1,7 +1,4 @@
-label
-{
-}
-input{
+input:not([type=file]){
     width:100%;
     padding:10px;
     border-radius: 25px;
@@ -10,9 +7,15 @@ input{
     text-transform: capitalize;
     margin:15px 0;
 }
+
 input[type=email], input[type=date], input[type=password]
 {
     text-transform: none;
+}
+
+input[type=date]
+{
+    width:100%;
 }
 
 
