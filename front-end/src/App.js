@@ -4,12 +4,12 @@ import "./App.css"
 import Login from './components/auth/login/Login'
 import LeftNavigation from './components/navigation/LeftNavigation'
 import PostPage from "./components/Post/PostPage"
+import {BrowserRouter as Router, Route} from "react-router-dom"
+import UserPage from './UserPage'
 
 export default class App extends Component {
-    state = {connexion:true, registered:false  }
-
-    openSignup = () => {this.state.registered = false}
-    openLogin = () => {this.state.registered = true}
+    state = {connexion:false}
+    
      
     render() {
         return (
@@ -25,25 +25,37 @@ export default class App extends Component {
                             </Fragment> 
                             : 
                             <Fragment>
-                                <h3 style={{borderBottom:this.state.registered ? "1px solid black" : "none"}} onClick={() => this.setState({registered:true})}><i className="fas fa-sign-in-alt"></i> S'identifier</h3>
-                                <h3 style={{borderBottom:this.state.registered ? "none" : "1px solid black"}} onClick={() =>  this.setState({registered:false})}><i className="fas fa-user-plus"></i> S'inscrire</h3>
+                                <a href="/login" style={{borderBottom:this.state.registered ? "1px solid black" : "none", color:"black", textDecoration:"none"}} ><h3><i className="fas fa-sign-in-alt"></i> S'identifier</h3></a>
+                                <a href="/signup" style={{borderBottom:this.state.registered ? "none" : "1px solid black", color:"black", textDecoration:"none"}} ><h3><i className="fas fa-user-plus"></i> S'inscrire</h3></a>
                             </Fragment>
                         }
                     </nav>
                 </header>
 
-                <section style={{display:'flex',justifyContent:this.state.connexion ? "space-between" : "center"}}>
 
+
+                <section style={{display:'flex',justifyContent:"space-between"}}>
+
+                    <LeftNavigation/>
+
+                    <Router>
+                        <Route path="/login" component={Login}/>
+                        <Route path="/signup" component={Signup}/>
+                        <Route path="/post" component={PostPage}/>
+                        <Route path="/user" component={UserPage}/>
+                    </Router>
+
+
+                    {/* 
                     {this.state.connexion ? 
                         <Fragment>
-                            <LeftNavigation/>
                             <PostPage/>
                         </Fragment>
                         : 
                         <Fragment>
                             {this.state.registered ? <Login/> : <Signup/>}
                         </Fragment>
-                    }
+                    } */}
                     
                 </section>
             </div>
