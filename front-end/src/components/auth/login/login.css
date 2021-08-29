@@ -3,7 +3,7 @@ input:not([type=file]){
     padding:10px;
     border-radius: 25px;
     border:none;
-    box-shadow: 1px 1px 3px black;
+    box-shadow: 1px 1px 8px black;
     text-transform: capitalize;
     margin:15px 0;
 }
