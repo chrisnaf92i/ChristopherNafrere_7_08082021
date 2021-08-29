@@ -3,7 +3,7 @@ input{
     padding:10px;
     border-radius: 25px;
     border:none;
-    box-shadow: 1px 1px 3px black;
+    box-shadow: 1px 1px 5px black;
     text-transform: capitalize;
 }
 input[type=email]
@@ -14,7 +14,7 @@ input[type=email]
 
 button
 {
-    box-shadow: 1px 1px 3px black;
+    box-shadow: 1px 1px 5px black;
     border:none;
     border-radius:15px;
     padding:8px;
