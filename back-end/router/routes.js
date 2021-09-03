@@ -1,15 +1,21 @@
 import { Router } from "express";
-import { getModoAccount, login, signup } from "../controller/authController.js";
+import { changeBio, getCurrentUser, login, signup } from "../controller/authController.js";
 import { createPublication, deletePublication, getAllPublication, likePublication, modifyPublication } from "../controller/publicationController.js";
-import auth from "../midleware/auth.js";
 
 const router = Router()
 
 router.get("/", (req, res) => {res.send("Bienvenu sur Groupomania")})
 
-router.get("/api/auth/user", getModoAccount)
+router.post("/test", (req, res) =>
+{
+    const requete = req.body
+    res.json({test:requete})
+})
+
+router.get("/api/user/:id", getCurrentUser)
 router.post("/api/auth/signup", signup)
 router.post("/api/auth/login", login)
+router.post("/api/user/biography/:id", changeBio)
 
 router.get("/api/post", /* auth, */ getAllPublication)
 
