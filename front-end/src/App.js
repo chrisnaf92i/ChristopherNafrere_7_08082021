@@ -6,6 +6,7 @@ import LeftNavigation from './components/navigation/LeftNavigation'
 import PostPage from "./components/Post/PostPage"
 import {BrowserRouter as Router, Route} from "react-router-dom"
 import UserPage from './UserPage'
+import logo from "./logo.png"
 
 export default class App extends Component {
     
@@ -38,6 +39,7 @@ export default class App extends Component {
             <div className="App">
                 <header className="App-header">
                     <h1>Groupomania</h1>
+                    <img src={logo}/>
                     <nav className="Nav-right">
                         {this.state.connexion ? 
                             <Fragment>
