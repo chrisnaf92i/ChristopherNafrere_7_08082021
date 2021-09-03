@@ -10,11 +10,15 @@ let database = mysql.createConnection({
 export const createPublication = (req, res) => {
     let newPublication = req.body
 
+    console.log(req.body)
+/*     newPublication.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+ */
+
     console.log(newPublication)
 
     database.query(`INSERT INTO publication (user_id, date_publication, image_url, content) 
 
-                    VALUES 
+                    VALUE  
     
                     (${newPublication.userId}, "${newPublication.datePublication}", "${newPublication.imageUrl}", "${newPublication.content}")`,
     (err, result, field) => {
@@ -23,6 +27,9 @@ export const createPublication = (req, res) => {
             res.status(500).send("can't create publication")
             return console.log(err)
         }
+
+        console.log(result)
+
         res.send("création de publication")
 
         return console.log(result)
@@ -34,21 +41,7 @@ export const createPublication = (req, res) => {
 export const getAllPublication = (req, res) => {
     let querryResult;
 
-    database.query(`SELECT 
-    
-                        date_publication,
-                        image_url,
-                        content,
-                        commentary_id,
-                        last_name,
-                        first_name,
-                        profile_image_url
-
-                        FROM publication 
-
-                        JOIN user 
-
-                        ON publication.user_id = user.id
+    database.query(`SELECT * FROM user JOIN publication ON  publication.user_id = user.id
 
                     `, (err, result, field) => {
         if(err)
@@ -57,7 +50,9 @@ export const getAllPublication = (req, res) => {
         }
         querryResult = result
 
-        return res.send(result)
+        console.log(querryResult)
+
+        return res.status(200).send(result)
     })
 
 

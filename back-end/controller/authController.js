@@ -1,6 +1,7 @@
 import mysql from "mysql"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+
 let database = mysql.createConnection({
     host:"localhost",
     user:"root",
@@ -11,9 +12,9 @@ let database = mysql.createConnection({
 database.connect()
 
 
-export const getModoAccount = (req, res) => {
-
-    database.query(`SELECT birthday, email, first_name, last_name, profile_image_url FROM user WHERE role = 0`, (err, result, field) => {
+export const getCurrentUser = (req, res) => {
+    const userId = req.params.id
+    database.query(`SELECT id, birthday, email, first_name, last_name, profile_image_url, biography FROM user WHERE id = ${userId}`, (err, result, field) => {
         if(err)
         {
             return console.log(err)
@@ -24,6 +25,8 @@ export const getModoAccount = (req, res) => {
 
 export const signup = async (req, res) => {
     let account = req.body
+    
+    console.log(account)
 
     if(account.role == undefined)
     {
@@ -50,20 +53,21 @@ export const signup = async (req, res) => {
 
 }
 
-export const login = (req, res) => {
-
-    let allUser = database.query(`SELECT * FROM user WHERE email = "${req.body.email}"`, (err, result, field) => {
+export const login = async (req, res) => {
+    let tryUser = req.body
+    
+    await database.query(`SELECT * FROM user WHERE email = "${tryUser.email}"`, (err, result, field) => {
         if(err)
         {
-            res.status(404).send("email non trouver")
+            res.status(404).send("email non trouvé")
             return console.log(err)
         }
 
         let finalResult = result[0]
 
-        console.log(`mot de passe `)
+        console.log(finalResult)
 
-        bcrypt.compare(req.body.password, finalResult.password)
+        bcrypt.compare(tryUser.password, finalResult.password)
             .then((valid) =>
             {
                 if(valid)
@@ -89,6 +93,22 @@ export const login = (req, res) => {
 
             })
 
-        return console.log(result[0])
     })
+}
+
+export const changeBio = (req, res) => {
+    const userId = req.params.id
+    const newBiography = req.body;
+
+    console.log(newBiography)
+
+    database.query(`UPDATE user SET biography = "${newBiography}"  WHERE id = ${userId}`, (err, result, field) => {
+        if(err)
+        {
+            return console.log(err)
+        }
+        return res.send("Modification de la biography")
+    })
+
+    res.send("Modification de la biography")
 }
