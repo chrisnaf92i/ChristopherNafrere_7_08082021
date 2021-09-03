@@ -22,11 +22,20 @@ export default class Login extends Component {
         console.log(this.state.password)
     }
 
-    handleSubmit = (event) => 
-    {
-        console.log(JSON.stringify(this.state))
-        fetch("/api/auth/login", {method:"post",headers: {"ContentType":"application/json"}, body:JSON.stringify(this.state)})
-        event.preventDefault();
+    handleSubmit = async (event) => 
+    {        
+        event.preventDefault()
+        
+        let response = await fetch("/api/auth/login", {method:"post",headers: {"Content-Type":"application/json"}, body:JSON.stringify(this.state)})
+       
+        let jwt = await response.json()
+
+        sessionStorage.user = JSON.stringify(jwt)
+
+        alert("connexion")
+
+        window.open("/post", "_self")
+
     }
     render() {
         return (
@@ -34,18 +43,18 @@ export default class Login extends Component {
                 <div>
                     <label for="email">Email :</label>
                     <br/>
-                    <input onChange={this.handleChangeEmail} type="email" id="email" required/>
+                    <input style={{width:"100%"}} onChange={this.handleChangeEmail} type="email" id="email" required/>
                 </div>
                 <br/>
                 <br/>
                 <div>
                     <label for="password">Mot de passe : </label>
                     <br/>
-                    <input onChange={this.handleChangePassword} type="password" id="password" required/>
+                    <input style={{width:"100%"}} onChange={this.handleChangePassword} type="password" id="password" required/>
                 </div>
                 <br/>
                 <br/>
-                <input  type="submit"/>
+                <button type="submit">Connexion</button>
             </form>
         )
     }

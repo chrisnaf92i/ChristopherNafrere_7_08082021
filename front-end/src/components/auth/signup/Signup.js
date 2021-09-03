@@ -48,7 +48,10 @@ export default class Signup extends Component {
     handleSubmit = (event) => {
 
         fetch("/api/auth/signup", {method:"post",headers:{"Content-Type":"application/json"}, body:JSON.stringify(this.state)})
+        sessionStorage.user = null
         alert("Inscription Réalisé");
+        window.open("/login", "_self")
+
 
         event.preventDefault();
     }
@@ -61,7 +64,7 @@ export default class Signup extends Component {
                 <div style={{margin:"25px"}}>
                     <label htmlFor="name">Nom :</label>
                     <br/>
-                    <input type="text" onChange={this.handleChangeLastName} id="name"  placeholder="ex : kirstein"/>
+                    <input type="text" onChange={this.handleChangeLastName} id="name"  placeholder="ex : kirstein" required/>
                 </div>
                     
                 <br/>
