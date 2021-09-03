@@ -8,8 +8,30 @@ import {BrowserRouter as Router, Route} from "react-router-dom"
 import UserPage from './UserPage'
 
 export default class App extends Component {
-    state = {connexion:false}
     
+    constructor(props)
+    {
+        super(props)
+        
+
+        this.state = ({connexion:false})
+
+        const user = JSON.parse(sessionStorage.user)
+        console.log(user)
+ 
+        if(!user)
+        {
+            this.state = ({connexion:false})
+        }
+        else
+        {
+            this.state = ({connexion:true})
+        } 
+    }
+
+    componentDidMount(){
+        sessionStorage.user = null
+    }
      
     render() {
         return (
@@ -19,14 +41,12 @@ export default class App extends Component {
                     <nav className="Nav-right">
                         {this.state.connexion ? 
                             <Fragment>
-                                <h3> <i className="fas fa-user"></i> Mon compte</h3>
-                                <h3><i className="fas fa-envelope"></i> Message</h3>
-                                <h3 onClick={() => this.setState({connexion:false})}> <i className="fas fa-sign-out-alt"></i> Se Déconnecter</h3>
+                                <h3 onClick={() => {sessionStorage.user = null; window.location.reload(); window.open("/login", "_self")}}> <i className="fas fa-sign-out-alt"></i> Se Déconnecter</h3>
                             </Fragment> 
                             : 
                             <Fragment>
-                                <a href="/login" style={{borderBottom:this.state.registered ? "1px solid black" : "none", color:"black", textDecoration:"none"}} ><h3><i className="fas fa-sign-in-alt"></i> S'identifier</h3></a>
-                                <a href="/signup" style={{borderBottom:this.state.registered ? "none" : "1px solid black", color:"black", textDecoration:"none"}} ><h3><i className="fas fa-user-plus"></i> S'inscrire</h3></a>
+                                <a href="/signup" style={{color:"black", textDecoration:"none"}} ><h3><i className="fas fa-user-plus"></i> S'inscrire</h3></a>
+                                <a href="/login" style={{color:"black", textDecoration:"none"}} ><h3><i className="fas fa-sign-in-alt"></i> S'identifier</h3></a>
                             </Fragment>
                         }
                     </nav>
