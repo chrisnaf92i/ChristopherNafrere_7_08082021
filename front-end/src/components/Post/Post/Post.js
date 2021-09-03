@@ -1,32 +1,46 @@
-import React, { Component, Fragment } from 'react'
-import Commentary from './Commentary'
-
+import React, { Component, Fragment} from 'react'
+import defaultPPimg from "../../../images/user-icon.png"
 export default class Post extends Component {
     data = this.props.data
+    handleClickDelete = () => 
+    {
+        console.log(this.data.id)
+        fetch(`/api/post/${this.data.id}`, {method:"delete"})
+        alert("publication Supprimer");
+        window.location.reload()
+    }
+
     render() {
         return (
             <div style={{width:'50%', margin:"25px auto", padding:"15px", border:"1px solid black", borderRadius:"25px"}}>
                 <header style={{display:'flex', justifyContent:"space-between" , alignItems:"center"}}>
                     <div style={{display:"flex", alignItems:"center"}} >
-                        <img style={{borderRadius:"100%", width:"50px", height:"50px", objectFit:"cover"}} src="https://img-19.ccm2.net/WNCe54PoGxObY8PCXUxMGQ0Gwss=/480x270/smart/d8c10e7fd21a485c909a5b4c5d99e611/ccmcms-commentcamarche/20456790.jpg"/>
-                        <h2>{this.data.userName}</h2>
+                        {this.data.profile_image_url ? 
+                            <img src={this.data.profile_image_url} style={{objectFit:"cover", width:"60px", height:"60px", borderRadius:"100%", margin:"15px"}}/> 
+                            
+                            :
+                            
+                            <img src={defaultPPimg}  style={{objectFit:"cover", width:"60px", height:"60px", borderRadius:"100%", margin:"15px"}}/>
+                        } 
+                         <h2 style={{textTransform:"capitalize"}}>{this.data.last_name} {this.data.first_name} </h2>
                     </div>
                     <p>
-                        {this.data.time.day}/{this.data.time.month}/{this.data.time.years} - {this.data.time.hour}:{this.data.time.minute}
+                        {this.data.date_publication.split("-").join(" ").split("T").join(" - ").split(".000Z")}
                     </p>
                 </header>
                 <section style={{width:"80%", margin:"auto"}}>
                     <p style={{textAlign:"center"}}>{this.data.content}</p>
-                    {this.data.imageUrl ? <img style={{width:"100%"}} src={this.data.imageUrl}/> : <Fragment/> }
+                    {this.data.image_url ? <img style={{width:"100%"}} src={this.data.image_url}/> : <Fragment/> }
                 </section>
                 <footer>
                     <div style={{display:'flex', justifyContent:"center"}}>
-                        <button style={{borderRadius:"0px", border:"1px solid black"}}><i className="fas fa-thumbs-up"></i> Like</button>
-                        <button style={{borderRadius:"0px", border:"1px solid black"}}><i className="fas fa-thumbs-down"></i> Dislike</button>
-                        <button style={{borderRadius:"0px", border:"1px solid black"}}><i className="fas fa-comment"></i> Commenter</button>
+                        <button onClick={this.onClickLike} style={{borderRadius:"0px", border:"1px solid black", margin:"10px", cursor:"pointer", }}><i className="fas fa-thumbs-up"></i> Like</button>
+                        <button onClick={this.onClickDislike} style={{borderRadius:"0px", border:"1px solid black", margin:"10px", cursor:"pointer"}}><i className="fas fa-thumbs-down"></i> Dislike</button>
+                        <button style={{borderRadius:"0px", border:"1px solid black", margin:"10px", cursor:"pointer"}}><i className="fas fa-comment"></i> Commenter</button>
+                        <button onClick={this.handleClickDelete} style={{borderRadius:"0px", border:"1px solid black", margin:"10px", cursor:"pointer"}}><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
 
-                    <div style={{ overflow:"hidden", marginTop:"25px", borderRadius:"0 0 15px 15px", border:"1px solid black",}}>
+{/*                     <div style={{ overflow:"hidden", marginTop:"25px", borderRadius:"0 0 15px 15px", border:"1px solid black",}}>
                         {this.data.commentary.map((commentary, i) => {
                             return(
                                 <Commentary key={i} data={commentary}/>
@@ -36,7 +50,7 @@ export default class Post extends Component {
                         <Commentary/>
                         <Commentary/>
                         <Commentary/>
-                    </div>
+                    </div> */}
                 </footer>
             </div>
         )
