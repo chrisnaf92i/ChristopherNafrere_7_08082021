@@ -1,29 +1,44 @@
-import React, { Component } from 'react'
 import CreatePost from "./createPost/CreatePost"
-import listPost from './listPost'
+/* import listPost from './listPost' */
 import Post from './Post/Post'
+import React, {  useState, useEffect} from 'react'
 
-export default class PostPage extends Component {
-    render() {
-        return (
-            <article style={{width:"100%"}}>
-                <CreatePost/>
+const PostPage = () => {
+    const [posts, setPosts] = useState([])
 
-                {listPost.map((post, i)=>{
-                   return(
-                       <Post key={i} data={post}/>
-                   )
-                })}
-
-                {/* <Post name="chrisnaf" 
-                    imageUrl="https://thumbs.gfycat.com/ImperfectSarcasticAfricanrockpython-size_restricted.gif"
-                    content="Salut tout le monde, c'erst en ce jour que je vous annonce que le directeur prend sa retraite et me lègue sa place, merci a vous de me faire confiance et travaillons mains dans la main"
-                />
-                <Post data/>
-                <Post name="chrisnaf"/>
-                <Post name="chrisnaf"/>
-                <Post name="chrisnaf"/> */}
-            </article>
-        )
+    const fetchData = async () => {
+        const data = await window.fetch("/api/post")
+        /* console.log(data) */
+        const allPost = await data.json()
+        setPosts(allPost)
+        console.log(allPost)
     }
+
+    console.log(posts)
+
+
+    useEffect(() => {
+
+        fetchData()
+    }, [])
+    
+    return (
+        <article style={{width:"100%"}}>
+            <CreatePost/>
+
+            { posts.map( 
+                post => 
+                    { 
+                        return (
+                                <Post key={post.id} data={post}/>   
+                        )
+                    } 
+                ) 
+            }
+
+        </article>
+    )
+
 }
+
+export default PostPage
