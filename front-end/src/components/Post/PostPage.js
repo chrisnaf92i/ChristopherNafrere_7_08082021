@@ -15,10 +15,14 @@ const PostPage = () => {
     }
 
     console.log(posts)
+    
 
 
     useEffect(() => {
-
+        if(sessionStorage.user == null)
+        {
+            window.open("/", "_self")
+        }
         fetchData()
     }, [])
     
@@ -30,7 +34,7 @@ const PostPage = () => {
                 post => 
                     { 
                         return (
-                                <Post key={post.id} data={post}/>   
+                            <Post key={post.id} data={post}/>   
                         )
                     } 
                 ) 
