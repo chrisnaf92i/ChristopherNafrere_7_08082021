@@ -61,6 +61,7 @@ export default class Signup extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit} style={{width:"30%", margin:"auto", display:'flex', flexDirection:"column"}}>
+                <h2 style={{textDecoration:"underline"}}>S'inscrire</h2>
                 <div style={{margin:"25px"}}>
                     <label htmlFor="name">Nom :</label>
                     <br/>

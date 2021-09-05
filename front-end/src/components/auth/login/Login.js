@@ -41,6 +41,7 @@ export default class Login extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}  style={{width:"100%", display:"flex", flexDirection:"column", alignItems:"center"}}>
+                <h2>Se connecter</h2>
                 <div>
                     <label for="email">Email :</label>
                     <br/>
