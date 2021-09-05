@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { changeBio, getCurrentUser, login, signup } from "../controller/authController.js";
-import { createPublication, deletePublication, getAllPublication, likePublication, modifyPublication } from "../controller/publicationController.js";
+import { changeBio, deleteUser, getCurrentUser, login, signup } from "../controller/authController.js";
+import { createPublication, deletePublication, getAllCommentaryFromPublication, getAllPublication, likePublication, writeCommentary } from "../controller/publicationController.js";
 
 const router = Router()
 
@@ -12,18 +12,22 @@ router.post("/test", (req, res) =>
     res.json({test:requete})
 })
 
+
 router.get("/api/user/:id", getCurrentUser)
+router.post("/api/user/biography/:id", changeBio)
+router.delete("/api/user/delete/:id", deleteUser)
 router.post("/api/auth/signup", signup)
 router.post("/api/auth/login", login)
-router.post("/api/user/biography/:id", changeBio)
 
 router.get("/api/post", /* auth, */ getAllPublication)
 
 router.post("/api/post", /* auth, */ createPublication)
 
-router.put("/api/post/:id", /* auth, */ modifyPublication)
 router.delete("/api/post/:id", /* auth, */ deletePublication)
 
-router.post("/api/post/:id/like", /* auth, */ likePublication)
+router.post("/api/post/like/:id", /* auth, */ likePublication)
+
+router.get("/api/post/commentary/:id", getAllCommentaryFromPublication)
+router.post("/api/post/commentary/:id", writeCommentary)
 
 export default router
