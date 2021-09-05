@@ -12,13 +12,13 @@ export default class CreatePost extends Component {
             userId:user.userId,
             content:"",
             datePublication:"",
-            imageUrl:"",
         }
 
     }
 
     handleSubmit = async (event) => 
     {
+        event.preventDefault()
         let today = new Date()
 
         console.log(this.state)
@@ -32,7 +32,7 @@ export default class CreatePost extends Component {
 
          alert("création de la publication réussite")
 
-         window.location.reload()
+         /* window.location.reload() */
     }
 
     handleText = (event) => 
@@ -43,8 +43,8 @@ export default class CreatePost extends Component {
 
     handleChangeImage = (event) => 
     {
-        this.setState({...this.state, imageUrl:event.target.value})
-        console.log(this.state.content)
+        this.setState({...this.state, file:event.target.value})
+        console.log(this.state.file)
     }
 
     showModal = () => {
@@ -56,10 +56,10 @@ export default class CreatePost extends Component {
             <form onSubmit={this.handleSubmit} encType="multipart/form-data" style={{display:"flex", width:"50%", margin:"auto",flexDirection:"column", justifyContent:"center", border:"1px solid black", borderRadius:"15px", padding:"25px"}} >
                 <h2>Nouvelle publication</h2>
                 <textArea onChange={this.handleText} cols="50" style={{ margin:"15px auto", width:"60%", height:"200px"}}/>
-                <div style={{display:"flex",justifyContent:"center"}}>
-                    <input type="file" style={{width:"50%"}}/>
+               {/*  <div style={{display:"flex",justifyContent:"center"}}>
+                    <input type="file" accept="image/png, image/jpeg, image/gif" style={{width:"50%"}}/>
 
-                </div>
+                </div> */}
                 <input type="submit" value="publier" style={{width:"30%", margin:"25px auto", cursor:"pointer"}}/>
             </form>
         )
