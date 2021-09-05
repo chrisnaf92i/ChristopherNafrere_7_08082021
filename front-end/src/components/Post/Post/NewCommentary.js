@@ -26,7 +26,7 @@ export default class NewCommentary extends Component {
 
 
         fetch(`/api/post/commentary/${this.state.id}`,{method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(this.state)})
-        window.open("/post", "_self")
+        /* window.open("/post", "_self") */
     }
 
     render() {
