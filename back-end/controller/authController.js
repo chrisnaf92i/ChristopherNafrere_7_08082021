@@ -23,6 +23,19 @@ export const getCurrentUser = (req, res) => {
     })
 }
 
+export const deleteUser = (req, res) => {
+    database.query(`DELETE FROM user WHERE id = ${req.params.id}`,  (err, result, field) => {
+        if(err)
+        {
+            return console.log(err)
+        }
+
+        res.json({message:"utilisateur supprimer", result})
+    
+        return console.log(result)
+    })
+}
+
 export const signup = async (req, res) => {
     let account = req.body
     
@@ -59,15 +72,17 @@ export const login = async (req, res) => {
     await database.query(`SELECT * FROM user WHERE email = "${tryUser.email}"`, (err, result, field) => {
         if(err)
         {
-            res.status(404).send("email non trouvé")
-            return console.log(err)
+            console.log("email non trouver")
         }
 
         let finalResult = result[0]
 
         console.log(finalResult)
 
-        bcrypt.compare(tryUser.password, finalResult.password)
+        if(finalResult != undefined)
+        {
+            console.log("réussite")
+            bcrypt.compare(tryUser.password, finalResult.password)
             .then((valid) =>
             {
                 if(valid)
@@ -75,6 +90,7 @@ export const login = async (req, res) => {
                     res.status(200).json({
                         message:"connexion réussi",
                         userId:finalResult.id, 
+                        role:finalResult.role,
                         token:jwt.sign(
                             {userId:finalResult.id},
                             "RANDOM_TOKEN_SECRET",
@@ -92,7 +108,10 @@ export const login = async (req, res) => {
                 res.status(500).json({"error":err})
 
             })
-
+        }else 
+        {
+            res.status(404).send("echec de connexion, email introuvable")
+        }
     })
 }
 
@@ -101,13 +120,13 @@ export const changeBio = (req, res) => {
     const newBiography = req.body;
 
     console.log(newBiography)
-
-    database.query(`UPDATE user SET biography = "${newBiography}"  WHERE id = ${userId}`, (err, result, field) => {
+    
+    database.query(`UPDATE user SET biography = "${newBiography.biography}"  WHERE id = ${userId}`, (err, result, field) => {
         if(err)
         {
             return console.log(err)
         }
-        return res.send("Modification de la biography")
+        console.log(result)
     })
 
     res.send("Modification de la biography")
