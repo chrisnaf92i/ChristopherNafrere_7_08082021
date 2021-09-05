@@ -1,5 +1,4 @@
 import React, { Component} from 'react'
-import BoutonModal from './BoutonModal.js'
 
 export default class CreatePost extends Component {
     constructor(props)
@@ -7,6 +6,7 @@ export default class CreatePost extends Component {
         super(props)
 
         const user = JSON.parse(sessionStorage.user)
+        
         console.log(user)
         this.state = {
             userId:user.userId,
@@ -32,7 +32,7 @@ export default class CreatePost extends Component {
 
          alert("création de la publication réussite")
 
-         /* window.location.reload() */
+         window.location.reload()
     }
 
     handleText = (event) => 
