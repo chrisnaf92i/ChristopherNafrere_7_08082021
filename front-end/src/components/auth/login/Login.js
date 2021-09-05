@@ -12,6 +12,7 @@ export default class Login extends Component {
         }
     }
 
+    
     handleChangeEmail = (event) => {
         this.state.email = event.target.value
         console.log(this.state.email)
@@ -54,7 +55,7 @@ export default class Login extends Component {
                 </div>
                 <br/>
                 <br/>
-                <button type="submit">Connexion</button>
+                <button style={{cursor:'pointer'}} type="submit">Connexion</button>
             </form>
         )
     }
