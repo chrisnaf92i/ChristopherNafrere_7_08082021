@@ -3,10 +3,10 @@ import Signup from './components/auth/signup/Signup'
 import "./App.css"
 import Login from './components/auth/login/Login'
 import LeftNavigation from './components/navigation/LeftNavigation'
-import PostPage from "./components/Post/PostPage"
 import {BrowserRouter as Router, Route, Redirect} from "react-router-dom"
 import logo from "./logo.png"
 import UserPage from './userPage/UserPage'
+import PostPage from './components/Post/PostPage'
 
 export default class App extends Component {
     
@@ -20,9 +20,22 @@ export default class App extends Component {
         const user = JSON.parse(sessionStorage.user)
         console.log(user)
  
+
+        const currentPath = window.location.pathname
+
+        console.log(window.location.pathname)
+        
+
         if(!user)
         { 
             this.state = ({connexion:false})
+            if( currentPath == "/signup" || currentPath == "/login" )
+            {
+                console.log("vous pouvez vous connecter")
+            }else
+            {
+                window.open("/login", "_self")
+            }
         }
         else
         { 

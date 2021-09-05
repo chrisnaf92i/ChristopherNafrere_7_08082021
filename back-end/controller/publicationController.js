@@ -150,10 +150,10 @@ export const getAllCommentaryFromPublication = (req,res) => {
 
 }
 
-export const writeCommentary = (req, res) => {
+export const writeCommentary = async (req, res) => {
     const newRequestCommentary = req.body
-    let newCommentary;
-    database.query(`INSERT INTO commentary (user_id, date_publication, image_url, content, publication_id) 
+    let listCommentary = []
+    await database.query(`INSERT INTO commentary (user_id, date_publication, image_url, content, publication_id) 
 
                     VALUE  
     
@@ -161,13 +161,39 @@ export const writeCommentary = (req, res) => {
     (err, result, field) => {
         if(err)
         {
-            return console.log(err)
+            console.log(err)
         }
 
-        console.log(result)
     })
 
-    database.query(`INSERT INTO publication_commentary (publication_id, commentary_id) 
+    await database.query("SELECT * FROM commentary", (err, result, field) => {
+        if(err){
+            console.log(err)
+        }
+
+        listCommentary = result
+
+        const lastCommentary = listCommentary[listCommentary.length - 1]
+
+        database.query(`INSERT INTO publication_commentary (publication_id, commentary_id) 
+        VALUE
+        
+        ("${req.params.id}", "${lastCommentary.id}")`, (err, result, field) => {
+            if(err)
+            {
+                return console.log(err)
+            }
+
+            console.log(result)
+
+        })
+
+
+        return console.log("test")
+    })
+
+
+    /* database.query(`INSERT INTO publication_commentary (publication_id, commentary_id) 
 
         VALUE  
 
@@ -180,5 +206,5 @@ export const writeCommentary = (req, res) => {
 
 
         return res.send("création de commentaire")
-    })
+    }) */
 }
