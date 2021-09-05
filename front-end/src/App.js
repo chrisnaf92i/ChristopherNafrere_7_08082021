@@ -4,9 +4,9 @@ import "./App.css"
 import Login from './components/auth/login/Login'
 import LeftNavigation from './components/navigation/LeftNavigation'
 import PostPage from "./components/Post/PostPage"
-import {BrowserRouter as Router, Route} from "react-router-dom"
-import UserPage from './UserPage'
+import {BrowserRouter as Router, Route, Redirect} from "react-router-dom"
 import logo from "./logo.png"
+import UserPage from './userPage/UserPage'
 
 export default class App extends Component {
     
@@ -21,25 +21,21 @@ export default class App extends Component {
         console.log(user)
  
         if(!user)
-        {
+        { 
             this.state = ({connexion:false})
         }
         else
-        {
+        { 
             this.state = ({connexion:true})
-        } 
-    }
-
-    componentDidMount(){
-        sessionStorage.user = null
+        }  
     }
      
     render() {
         return (
             <div className="App">
                 <header className="App-header">
-                    <h1>Groupomania</h1>
-                    <img src={logo}/>
+                    {/* <h1>Groupomania</h1> */}
+                    <img src={logo} style={{width:"25%"}} />
                     <nav className="Nav-right">
                         {this.state.connexion ? 
                             <Fragment>
@@ -57,10 +53,20 @@ export default class App extends Component {
 
 
                 <section style={{display:'flex',justifyContent:"space-between"}}>
-
-                    <LeftNavigation/>
+                    {this.state.connexion ? <LeftNavigation/> : <Fragment/>}
+                    
 
                     <Router>
+                        {
+                            sessionStorage.user == null ? 
+                            <Route exact path="/">
+                                <Redirect to="/post"/>
+                            </Route>
+                            :
+                            <Route exact path="/">
+                                <Redirect to="/login"/>
+                            </Route>
+                        }
                         <Route path="/login" component={Login}/>
                         <Route path="/signup" component={Signup}/>
                         <Route path="/post" component={PostPage}/>
@@ -68,17 +74,6 @@ export default class App extends Component {
                     </Router>
 
 
-                    {/* 
-                    {this.state.connexion ? 
-                        <Fragment>
-                            <PostPage/>
-                        </Fragment>
-                        : 
-                        <Fragment>
-                            {this.state.registered ? <Login/> : <Signup/>}
-                        </Fragment>
-                    } */}
-                    
                 </section>
             </div>
         )
