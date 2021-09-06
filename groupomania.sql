@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 05 sep. 2021 à 18:16
+-- Généré le : lun. 06 sep. 2021 à 09:51
 -- Version du serveur :  8.0.26
 -- Version de PHP : 7.3.21
 
@@ -36,14 +36,7 @@ CREATE TABLE IF NOT EXISTS `commentary` (
   `content` text,
   `publication_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `commentary`
---
-
-INSERT INTO `commentary` (`id`, `user_id`, `date_publication`, `image_url`, `content`, `publication_id`) VALUES
-(13, 38, '2021-08-05 19:40:00', '', 'Bienvenu parmis nous Jonitha', 75);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -58,23 +51,10 @@ CREATE TABLE IF NOT EXISTS `publication` (
   `date_publication` datetime NOT NULL,
   `image_url` text,
   `content` text,
-  `commentary_id` int DEFAULT NULL,
   `likes` int DEFAULT '0',
   `dislikes` int DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `publication`
---
-
-INSERT INTO `publication` (`id`, `user_id`, `date_publication`, `image_url`, `content`, `commentary_id`, `likes`, `dislikes`) VALUES
-(65, 38, '2021-08-05 16:29:00', '', 'yo tout le monde c\'est squeezie', NULL, 0, 0),
-(66, 42, '2021-08-05 17:01:00', '', 'wnjfaezjomjfqd\n', NULL, 0, 0),
-(67, 42, '2021-08-05 17:17:00', '', '', NULL, 0, 0),
-(68, 42, '2021-08-05 17:17:00', '', '', NULL, 0, 0),
-(69, 42, '2021-08-05 17:18:00', '', '', NULL, 0, 0),
-(75, 37, '2021-08-05 19:18:00', 'undefined', 'Salut voici mon premier poste, je suis Jonitha Nafrere et je suis la nouvelle responsable des ressource humaine au seins de Groupomania', NULL, 0, 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -88,14 +68,7 @@ CREATE TABLE IF NOT EXISTS `publication_commentary` (
   `publication_id` int NOT NULL,
   `commentary_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `publication_commentary`
---
-
-INSERT INTO `publication_commentary` (`id`, `publication_id`, `commentary_id`) VALUES
-(15, 75, 75);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -130,17 +103,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `biography` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `user`
---
-
-INSERT INTO `user` (`id`, `role`, `last_name`, `first_name`, `email`, `password`, `birthday`, `profile_image_url`, `biography`) VALUES
-(37, '1', 'NAFRERE', 'jonitha', 'jonitha.nafrere@gmail.com', '$2b$10$uLeh/LUd2Y0OROUp6czohuzBYf4Ruazxm3FJTQrQf5TZBhYE8ua0S', '1979-08-02 00:00:00', NULL, 'fdqsfdsqfsqdfw'),
-(38, '0', 'nafrere', 'christopher', 'nafrere.christopher@gmail.com', '$2b$10$TM2DbTpk6stJAoJYRBHvy.lymOV7QLBXhDcTPIcoLuY2J4L60LhCG', '2000-07-26 00:00:00', NULL, NULL),
-(40, '1', 'kirstein', 'jean', 'jean.kirstein@gmail.com', '$2b$10$NHlQsp0DYleZG5UuYN/ixOQB6bnxhn9Fi.5rZFbt72Jt3yYArMm5G', '0835-04-07 00:00:00', NULL, NULL),
-(41, '1', 'jaeger', 'eren', 'eren.jeager@gmail.com', '$2b$10$qUFOd/P/6t1H/is2jKzAJ.l/K8y9B5662KrORVSovjlGGq.3PnPgG', '0835-03-30 00:00:00', NULL, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
