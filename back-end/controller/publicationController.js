@@ -128,7 +128,7 @@ export const likePublication = (req, res) => {
 
 export const getAllCommentaryFromPublication = (req,res) => {
     
-    database.query(`SELECT user.last_name, user.first_name, user.profile_image_url, commentary.content, commentary.image_url FROM publication
+    database.query(`SELECT  commentary.id, user.last_name, user.first_name, user.profile_image_url, commentary.user_id, commentary.content, commentary.image_url, commentary.date_publication FROM publication
         
         JOIN publication_commentary
         ON publication_commentary.publication_id = publication.id
@@ -147,7 +147,6 @@ export const getAllCommentaryFromPublication = (req,res) => {
         }
         return res.json({message:"réussite", allCommentary:result})
     })
-
 }
 
 export const writeCommentary = async (req, res) => {
@@ -191,20 +190,28 @@ export const writeCommentary = async (req, res) => {
 
         return console.log("test")
     })
+}
 
+export const deleteCommentary = (req, res) => {
+    database.query(`DELETE FROM commentary WHERE id = ${req.params.id}`,  (err, result, field) => {
+        if(err)
+        {
+            return console.log(err)
+        }
 
-    /* database.query(`INSERT INTO publication_commentary (publication_id, commentary_id) 
+        console.log(result)
 
-        VALUE  
+    })
 
-        ("${req.params.id}", "${newRequestCommentary.id}")`,
-    (err, result, field) => {
-    if(err)
-    {
-    return console.log(err)
-    }
+    database.query(`DELETE FROM publication_commentary WHERE commentary_id = ${req.params.id}`,  (err, result, field) => {
+        if(err)
+        {
+            return console.log(err)
+        }
 
+        console.log(result)    
+       
+    })
 
-        return res.send("création de commentaire")
-    }) */
+    res.send("suppression")
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { changeBio, deleteUser, getCurrentUser, login, signup } from "../controller/authController.js";
-import { createPublication, deletePublication, getAllCommentaryFromPublication, getAllPublication, likePublication, writeCommentary } from "../controller/publicationController.js";
+import { createPublication, deleteCommentary, deletePublication, getAllCommentaryFromPublication, getAllPublication, likePublication, writeCommentary } from "../controller/publicationController.js";
 
 const router = Router()
 
@@ -30,4 +30,5 @@ router.post("/api/post/like/:id", /* auth, */ likePublication)
 router.get("/api/post/commentary/:id", getAllCommentaryFromPublication)
 router.post("/api/post/commentary/:id", writeCommentary)
 
+router.delete("/api/post/commentary/:id", deleteCommentary)
 export default router

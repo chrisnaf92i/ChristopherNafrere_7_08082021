@@ -19,14 +19,13 @@ export default class NewCommentary extends Component {
         this.setState({...this.state, content:event.target.value})
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         let today = new Date()
         this.state.date = `${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth()}` : `${today.getMonth()}`}-${today.getDate()}  ${today.getHours() < 10 ? `0${today.getHours()}` : `${today.getHours()}`}:${today.getMinutes() < 10 ? `0${today.getMinutes()}`:`${today.getMinutes()}`}`
+        await fetch(`/api/post/commentary/${this.state.id}`,{method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(this.state)})
 
 
-        fetch(`/api/post/commentary/${this.state.id}`,{method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(this.state)})
-        /* window.open("/post", "_self") */
     }
 
     render() {
