@@ -55,41 +55,45 @@ export default class Post extends Component {
 
     }
 
-    onClickLike = async () => {
+    onClickLike = (event) => {
+        event.preventDefault()
         if(this.state.like == null || this.state.like == 0)
         {
-            await this.setState({...this.state, like:1})
+            
+            this.setState({...this.state, like:1})
             console.log(this.state.like)
             const requestBody = {like:this.state.like, user_id:this.state.user}
-             
-            await fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
+            this.data.likes += 1
+            fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
+            alert("like ajouter")
+
         } else if(this.state.like == 1)
         {
-            await this.setState({...this.state, like:0})
+            
+            this.setState({...this.state, like:0})
+            console.log(this.state.like)
+
             const requestBody = {like:this.state.like, user_id:this.state.user}
+            this.data.dislikes -= 1
          
-            await fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
+            fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
+            alert("like retirer")
 
         }
     }
 
-    onClickDislike = async() => {
+    onClickDislike = (event) => {
         if(this.state.like == null || this.state.like == 0)
         {
-            await this.setState({...this.state, like:-1})
+            
+            this.setState({...this.state, like:-1})
             this.data.dislikes += 1
             const requestBody = {like:this.state.like, user_id:this.state.user}
          
-            await fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
+            fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
 
 
-        }else if(this.state.like == -1)
-        {
-            await this.setState({...this.state, like:0})
-            this.data.dislikes -= 1
-            const requestBody = {like:this.state.like, user_id:this.state.user}
-         
-            await fetch(`/api/post/like/${this.data.id}`, {method:"post", headers:{"Content-Type":"application/json"}, body:JSON.stringify(requestBody)})
+            alert("dislike ajouter")
 
         }
     }
@@ -131,22 +135,6 @@ export default class Post extends Component {
                                 <br/>
                                 <i className="fas fa-thumbs-up">
                                 </i> Like
-                            </button>
-                        
-                        <button type="button" onClick={this.onClickDislike} style={{
-                                boxShadow:"1px 1px 6px black" ,
-                                borderRadius:"10px", 
-                                /* border:"1px solid black",  */
-                                margin:"10px", cursor:"pointer", 
-                                backgroundColor:this.state.like == -1 ? "red" : "white", 
-                                color:this.state.like == -1 ? "white" : "black", 
-                                opacity: this.state.like == 1 ? "0.5" : 1 ,
-                                transition:"250ms"
-                            }}>
-                                {this.data.dislikes}
-                                <br/>
-                                <i class="fas fa-thumbs-down">
-                                </i> dislike
                             </button>
                         
                         <button type="button" onClick={this.handleClickCommentary} style={{boxShadow:"1px 1px 6px black" ,borderRadius:"10px",backgroundColor:'white',  /* border:"1px solid black",  */margin:"10px", cursor:"pointer"}}><i className="fas fa-comment"></i> Commenter</button>

@@ -98,20 +98,45 @@ export const likePublication = (req, res) => {
         {
             return console.log(err)
         }
-        
-        return publication = result
+
+        const finalResult = result[0]
+
+        if(likeData.like == 1)
+        {
+
+            const like = finalResult.likes + 1
+            console.log(like)
+            database.query(`UPDATE publication SET likes = ${like} WHERE id = ${publication_id}`, (err, result2, field) => 
+            {    
+                if(err)
+                {
+                    return console.log(err)
+                }
+
+                database.query(`INSERT INTO publication_userLiked (publication_id, userLiked_id)
+                    VALUE
+                    (${publication_id}, ${likeData.user_id}) 
+                `, (err, result3, field) => 
+                {    
+                    if(err)
+                    {
+                        return console.log(err)
+                    }
+                    console.log(result3)
+                })
+                console.log(result2)
+            })
+        }else if(likeData.like == 0)
+        {
+            console.log("retirer le like")
+        }
+    
+        return
     })
 
     console.log(publication)
 
-    if(likeData.like == 1)
-    {
-        console.log("ajout de like")
-        const likes = publication.likes + 1
-
-        console.log(likes)
-    }
-
+    
 
 
     /* database.query(` UPDATE publication SET likes = 
